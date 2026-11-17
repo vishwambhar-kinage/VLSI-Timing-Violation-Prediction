@@ -1,0 +1,8 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.env
+.DS_Store
+# Keep the project dataset in Git so hosted deployments can load it.
+!data/*.csv

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VLSI-TVP | Timing Violation Predictor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-icon">▦</span><span>VLSI-TVP</span></div>
+    <div class="nav-label">WORKSPACE</div>
+    <button class="nav-link active" data-page="dashboard"><span>⌂</span> Dashboard</button>
+    <button class="nav-link" data-page="predict"><span>⌁</span> Predict</button>
+    <button class="nav-link" data-page="models"><span>▥</span> Model Comparison</button>
+    <button class="nav-link" data-page="analysis"><span>◫</span> Data Analysis (EDA)</button>
+    <div class="nav-label second">PROJECT</div>
+    <button class="nav-link" data-page="dataset"><span>▤</span> Dataset</button>
+    <button class="nav-link" data-page="about"><span>ⓘ</span> About</button>
+    <div class="sidebar-foot"><div class="status-dot"></div><span>ML service ready</span><small>v1.0.0</small></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="crumb">Machine Learning <span>/</span> <b id="crumb-name">Dashboard</b></div>
+      <div class="top-actions"><span class="live"><i></i> API connected</span><div class="avatar">VK</div></div>
+    </header>
+
+    <section class="page active-page" id="page-dashboard">
+      <div class="page-heading"><div><p class="eyebrow">PROJECT OVERVIEW</p><h1>Dashboard</h1><p class="muted">Machine Learning-Based Prediction of Timing Violations in VLSI Circuits</p></div><span class="date-pill">AIML MDM MINI PROJECT</span></div>
+      <div class="stats-grid">
+        <article class="stat-card"><div class="stat-icon purple">▤</div><div><p>Total Samples</p><strong id="stat-samples">10,000</strong><small>Timing dataset</small></div></article>
+        <article class="stat-card"><div class="stat-icon orange">⌗</div><div><p>Total Features</p><strong id="stat-features">15</strong><small>Input attributes</small></div></article>
+        <article class="stat-card"><div class="stat-icon green">◎</div><div><p>Target Classes</p><strong>02</strong><small>Violation / No violation</small></div></article>
+        <article class="stat-card"><div class="stat-icon blue">◈</div><div><p>ML Algorithms</p><strong id="stat-models">05</strong><small>Compared models</small></div></article>
+      </div>
+      <div class="dashboard-grid">
+        <article class="welcome-card">
+          <div class="welcome-copy"><p class="eyebrow">VLSI TIMING INTELLIGENCE</p><h2>Identify timing risks<br>before they become issues.</h2><p>Use machine learning to classify circuit paths using design, logic and timing parameters.</p><button class="primary-btn" data-go="predict">Run a Prediction <span>→</span></button></div>
+          <div class="chip-art"><div class="chip">VLSI</div><div class="circuit c1"></div><div class="circuit c2"></div></div>
+        </article>
+        <article class="panel quick-panel"><div class="panel-head"><h3>Project at a glance</h3><span class="purple-text">● Live</span></div><div class="quick-row"><span class="check">✓</span><div><b>Supervised classification</b><small>Binary timing-violation prediction</small></div></div><div class="quick-row"><span class="check">✓</span><div><b>Five candidate models</b><small>Logistic Regression to Gradient Boosting</small></div></div><div class="quick-row"><span class="check">✓</span><div><b>Evaluation metrics</b><small>Accuracy, precision, recall and F1-score</small></div></div><div class="source-note" id="data-source">Loading data source…</div></article>
+      </div>
+      <div class="lower-grid">
+        <article class="panel"><div class="panel-head"><h3>Classification distribution</h3><span class="subtle">Dataset</span></div><div class="distribution"><div class="donut" id="donut"><div><b id="clean-percent">--</b><small>No violation</small></div></div><div class="legend"><p><i class="legend-dot clean"></i>No Timing Violation <b id="clean-count">--</b></p><p><i class="legend-dot violation"></i>Timing Violation <b id="violation-count">--</b></p></div></div></article>
+        <article class="panel"><div class="panel-head"><h3>Model selection</h3><span class="subtle">Test set</span></div><div class="best-model"><div class="trophy">★</div><div><small>Top model by F1-score</small><h2 id="best-model-name">Loading…</h2><p>F1-score <b id="best-f1">--</b></p></div></div><button class="text-btn" data-go="models">View model comparison →</button></article>
+      </div>
+    </section>
+
+    <section class="page" id="page-predict">
+      <div class="page-heading"><div><p class="eyebrow">INFERENCE WORKSPACE</p><h1>Predict Timing Violation</h1><p class="muted">Enter the circuit path characteristics to estimate its timing status.</p></div><span class="date-pill">MODEL INFERENCE</span></div>
+      <div class="predict-layout">
+        <form class="panel form-panel" id="predict-form">
+          <div class="panel-head"><div><h3>Input Parameters</h3><p class="muted tiny">Provide the design and timing values for one path.</p></div><span class="step-tag">01 / INPUT</span></div>
+          <div class="form-grid">
+            <label>Design Type<select name="design_type"><option>ALU</option><option>Multiplier</option><option>UART</option><option>Adder</option><option>Counter</option><option>FSM</option><option>FIFO</option><option>SPI</option></select></label>
+            <label>Path Type<select name="path_type"><option>reg_to_reg</option><option>in_to_reg</option><option>reg_to_out</option></select></label>
+            <label>Logic Depth<input name="logic_depth" type="number" min="0" value="12" required></label>
+            <label>Cell Count<input name="cell_count" type="number" min="0" value="58" required></label>
+            <label>Fanout<input name="fanout" type="number" min="0" value="4" required></label>
+            <label>Cell Delay (ns)<input name="cell_delay_ns" type="number" step="0.0001" min="0" value="2.05" required></label>
+            <label>Net Delay (ns)<input name="net_delay_ns" type="number" step="0.0001" min="0" value="0.43" required></label>
+            <label>Clock Period (ns)<input name="clock_period_ns" type="number" step="0.001" min="0.001" value="4.00" required></label>
+            <label>Input Slew<input name="input_slew_ns" type="number" step="0.0001" min="0" value="0.30" required></label>
+            <label>Output Load (fF)<input name="output_load_pf" type="number" step="0.0001" min="0" value="0.60" required></label>
+            <label>Setup Time (ns)<input name="setup_time_ns" type="number" step="0.0001" min="0" value="0.22" required></label>
+          </div>
+          <div class="form-actions"><button class="primary-btn" type="submit" id="predict-btn">Run Prediction <span>→</span></button><button class="secondary-btn" type="reset">Reset values</button></div>
+          <p class="tiny muted">The model uses the 11 input features present in your uploaded CSV.</p>
+        </form>
+        <aside class="panel result-panel"><div class="panel-head"><h3>Prediction Result</h3><span class="step-tag">02 / OUTPUT</span></div><div class="empty-result" id="empty-result"><div class="result-symbol">⌁</div><h3>Awaiting input</h3><p>Submit circuit parameters to see the model prediction here.</p></div><div id="prediction-result" class="result-hidden"><div class="result-banner" id="result-banner"><div class="result-check" id="result-check">✓</div><small>MODEL PREDICTION</small><h2 id="result-label">No Timing Violation</h2><p id="result-description">The model classified this path.</p></div><div class="confidence-block"><div class="confidence-line"><span>Prediction confidence</span><b id="confidence-value">--</b></div><div class="progress"><span id="confidence-bar"></span></div></div><div class="result-meta"><p><span>Predicted class</span><b id="predicted-class">--</b></p><p><span>Selected model</span><b id="prediction-model">--</b></p></div></div><div class="disclaimer">This prediction is a screening aid and does not replace sign-off Static Timing Analysis (STA).</div></aside>
+      </div>
+    </section>
+
+    <section class="page" id="page-models">
+      <div class="page-heading"><div><p class="eyebrow">PERFORMANCE EVALUATION</p><h1>Model Comparison</h1><p class="muted">Compare classification algorithms on the same held-out test split.</p></div><span class="date-pill">80 / 20 TRAIN-TEST SPLIT</span></div>
+      <div class="panel table-panel"><div class="panel-head"><div><h3>Classification performance</h3><p class="muted tiny">Metrics are calculated when the backend starts.</p></div><span class="step-tag">MODEL BENCHMARK</span></div><div class="table-wrap"><table><thead><tr><th>Model</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1-score</th></tr></thead><tbody id="model-rows"><tr><td colspan="5">Loading model metrics…</td></tr></tbody></table></div></div>
+      <div class="model-lower"><article class="panel"><div class="panel-head"><h3>F1-score comparison</h3><span class="subtle">Higher is better</span></div><div id="model-bars" class="bar-chart"></div></article><article class="panel"><div class="panel-head"><h3>Best model confusion matrix</h3><span class="subtle" id="matrix-title">Selected classifier</span></div><div class="matrix-wrap"><div class="matrix-label"></div><div class="matrix-label">Predicted 0</div><div class="matrix-label">Predicted 1</div><div class="matrix-label">Actual 0</div><div class="matrix-cell" id="m00">-</div><div class="matrix-cell" id="m01">-</div><div class="matrix-label">Actual 1</div><div class="matrix-cell" id="m10">-</div><div class="matrix-cell" id="m11">-</div></div><p class="tiny muted">Rows represent actual classes; columns represent predicted classes.</p></article></div>
+    </section>
+
+    <section class="page" id="page-analysis">
+      <div class="page-heading"><div><p class="eyebrow">EXPLORATORY DATA ANALYSIS</p><h1>Data Analysis (EDA)</h1><p class="muted">Explore class balance and feature association in the timing dataset.</p></div><span class="date-pill">DATASET INSIGHTS</span></div>
+      <div class="stats-grid compact-stats"><article class="stat-card"><div class="stat-icon purple">▤</div><div><p>Samples</p><strong id="eda-samples">--</strong><small>Records analysed</small></div></article><article class="stat-card"><div class="stat-icon orange">⌗</div><div><p>Attributes</p><strong>12</strong><small>Dataset columns</small></div></article><article class="stat-card"><div class="stat-icon green">✓</div><div><p>Missing Values</p><strong>0*</strong><small>*Demo dataset only</small></div></article><article class="stat-card"><div class="stat-icon blue">◎</div><div><p>Classes</p><strong>02</strong><small>Binary target</small></div></article></div>
+      <div class="analysis-grid"><article class="panel"><div class="panel-head"><h3>Class distribution</h3><span class="subtle">Target variable</span></div><div class="distribution"><div class="donut" id="eda-donut"><div><b>2</b><small>Classes</small></div></div><div class="legend"><p><i class="legend-dot clean"></i>No Violation <b id="eda-clean">--</b></p><p><i class="legend-dot violation"></i>Violation <b id="eda-violation">--</b></p></div></div></article><article class="panel"><div class="panel-head"><h3>Feature association with target</h3><span class="subtle">Absolute correlation</span></div><div id="feature-bars" class="feature-bars"></div></article></div>
+      <div class="panel insight-panel"><div class="panel-head"><h3>Interpretation notes</h3><span class="step-tag">EDA</span></div><div class="insight-list"><div><b>Class balance</b><p>Review the class proportions before selecting metrics or resampling methods.</p></div><div><b>Feature leakage</b><p>Slack and path delay may directly encode timing status. This demo model excludes both from its input features.</p></div><div><b>Engineering validation</b><p>Correlation indicates association, not causation. Validate findings against real design data and STA reports.</p></div></div></div>
+    </section>
+
+    <section class="page" id="page-dataset">
+      <div class="page-heading"><div><p class="eyebrow">DATA REFERENCE</p><h1>Dataset</h1><p class="muted">Fields used by the VLSI timing violation prediction pipeline.</p></div></div>
+      <div class="panel table-panel"><div class="panel-head"><h3>Feature dictionary</h3><span class="step-tag">15 ATTRIBUTES</span></div><div class="table-wrap"><table><thead><tr><th>Feature</th><th>Type</th><th>Description</th></tr></thead><tbody>
+      <tr><td>design_type</td><td>Categorical</td><td>Design category (CPU, Memory, DSP, Control)</td></tr><tr><td>path_type</td><td>Categorical</td><td>Timing path category</td></tr><tr><td>logic_depth</td><td>Numerical</td><td>Number of logic levels</td></tr><tr><td>cell_count</td><td>Numerical</td><td>Number of cells on the path</td></tr><tr><td>fanout</td><td>Numerical</td><td>Number of loads driven</td></tr><tr><td>cell_delay_ns</td><td>Numerical</td><td>Cell delay in nanoseconds</td></tr><tr><td>net_delay_ns</td><td>Numerical</td><td>Interconnect delay in nanoseconds</td></tr><tr><td>clock_period_ns</td><td>Numerical</td><td>Clock period in nanoseconds</td></tr><tr><td>input_slew_ns</td><td>Numerical</td><td>Input transition slew in nanoseconds</td></tr><tr><td>output_load_pf</td><td>Numerical</td><td>Output load in picofarads</td></tr><tr><td>setup_time_ns</td><td>Numerical</td><td>Setup requirement in nanoseconds</td></tr><tr><td>timing_violation</td><td>Target</td><td>0 = No violation, 1 = Violation</td></tr>
+      </tbody></table></div><p class="tiny muted">This application loads the actual 10,000-row CSV included in the data folder. It contains 11 input features and one target column.</p></div>
+    </section>
+
+    <section class="page" id="page-about">
+      <div class="page-heading"><div><p class="eyebrow">PROJECT DOCUMENTATION</p><h1>About this project</h1><p class="muted">Machine Learning-Based Prediction of Timing Violations in VLSI Circuits</p></div></div>
+      <div class="about-grid"><article class="panel"><h3>Problem statement</h3><p>Develop a supervised machine learning system that predicts whether a VLSI circuit path has a timing violation using circuit and timing parameters.</p><h3>Project objectives</h3><ul><li>Prepare and explore circuit timing data.</li><li>Train and compare multiple classification algorithms.</li><li>Evaluate with accuracy, precision, recall, F1-score and confusion matrix.</li><li>Identify parameters associated with timing violations.</li></ul></article><article class="panel"><h3>Technology stack</h3><div class="tech-pills"><span>Python</span><span>Flask</span><span>Scikit-learn</span><span>Pandas</span><span>NumPy</span><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Chart UI</span></div><h3>Project guide</h3><p>Anita Shingarde</p><h3>Team</h3><p>Aditi Bhavar · Tanish Rayalkar · Akshay Naik · Vishwambhar Kinage</p></article></div>
+      <div class="notice"><b>Research / demo disclaimer</b><p>The project brief describes a 10,000-row dataset. No original dataset or trained model was supplied with the brief, so this runnable package uses a deterministic synthetic dataset for demonstration. Replace it with your authorised project CSV before reporting final results.</p></div>
+    </section>
+    <footer>VLSI-TVP <span>Machine Learning for VLSI Timing Analysis</span><span>Educational prototype · Not sign-off STA</span></footer>
+  </main>
+</div>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body></html>
